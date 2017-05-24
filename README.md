@@ -4,7 +4,7 @@ TODO: implement documentation
 
 ## Backend APIs
 
-* **[Restricted]** APIs require user to be logged in *
+_**[Restricted]** APIs require user to be logged in_
 
 `GET /auth/login`: Logs in user via Twitter OAuth
 
@@ -16,7 +16,7 @@ TODO: implement documentation
 
 `GET /poll/recent`: Fetches recently created/updated polls
 
-**[Restricted]**`POST /poll/new`: Create new post
+`POST /poll/new`: **[Restricted]** Create new post
 
 Expects the following input:
 
@@ -26,8 +26,6 @@ Expects the following input:
 	"options": "poll\noptions\separated\nby\nline\break"
 }
 ```
-
-Returns the poll object.
 
 ---
 
@@ -53,7 +51,7 @@ Expects the following input:
 }
 ```
 
-**[Restricted]**`DELETE /poll/:id`: Delete poll with ID `:id`. Only poll owners are authorized.
+`DELETE /poll/:id`: **[Restricted]** Delete poll with ID `:id`. Only poll owners are authorized.
 
 
 
