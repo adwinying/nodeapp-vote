@@ -19,6 +19,10 @@ const pollModel = new Schema ({
 	},
 	opts: {
 		type: [optSchema]
+	},
+	updated: {
+		type: Date,
+		default: Date.now
 	}
 });
 
@@ -34,6 +38,14 @@ module.exports.findByUserId = (userId, callback) => {
 
 module.exports.getAllPolls = (callback) => {
 	Poll.find({}, (err, polls) => {
+		if (err) callback(err, null);
+
+		callback(null, polls);
+	});
+};
+
+module.exports.getRecentPolls = (callback) => {
+	Poll.find({}).sort('-updated').limit(10).exec((err, polls) => {
 		if (err) callback(err, null);
 
 		callback(null, polls);

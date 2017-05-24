@@ -24,6 +24,20 @@ pollRouter.get('/all', (req, res) => {
 	});
 });
 
+// Fetch recent polls
+pollRouter.get('/recent', (req, res) => {
+	Poll.getRecentPolls((err, results) => {
+		if (err) {
+			sendErr(res, err);
+		} else {
+			res.json({
+				success: true,
+				polls: results
+			});
+		}
+	});
+});
+
 // Fetch user's polls
 pollRouter.get('/userpolls', loggedIn, (req, res) => {
 	Poll.findByUserId(req.user.twitterId, (err, results) => {
@@ -42,7 +56,7 @@ pollRouter.get('/userpolls', loggedIn, (req, res) => {
 // TODO: restrict access
 pollRouter.post('/new', (req, res) => {
 	let newPoll = new Poll({
-		ownerId: 2535451741,
+		ownerId: 53850219,
 		title: req.body.title,
 		opts: req.body.options.split('\n').map((opt) => {
 			return {
@@ -92,6 +106,8 @@ pollRouter.route('/:pollId')
 			}
 		];
 
+		req.poll.updated = Date.now();
+
 		req.poll.save((err) => {
 			if (err) {
 				sendErr(res, err);
@@ -116,6 +132,8 @@ pollRouter.route('/:pollId')
 				return opt;
 			}
 		});
+
+		req.poll.updated = Date.now();
 
 		req.poll.save((err) => {
 			if (err) {
