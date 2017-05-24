@@ -1,0 +1,33 @@
+{
+  "name": "vote",
+  "version": "1.0.0",
+  "description": "Voting App",
+  "main": "app.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node app.js",
+    "watch": "gulp watch"
+  },
+  "author": "Adwin Ying",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "mongoose": "^4.10.1",
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-env": "^0.4.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "should": "^11.2.1",
+    "sinon": "^2.2.0"
+  }
+}
