@@ -6,6 +6,7 @@ import { RoutingModule } from './routing.module';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { PollService } from './services/poll.service';
+import { AuthService } from './services/auth.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -35,7 +36,8 @@ import { PollDetailComponent } from './components/poll-detail/poll-detail.compon
     FlashMessagesModule
   ],
   providers: [
-    PollService
+    PollService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

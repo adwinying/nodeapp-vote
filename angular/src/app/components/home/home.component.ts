@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   isAjaxComplete: boolean = false;
 
   constructor(
-  	private pollService: PollService
+    private pollService: PollService
   ) { }
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   		} else {
         throw data.message;
       }
-  	})
+  	});
   }
 
 }

@@ -13,42 +13,49 @@ export class PollService {
   }
 
   fetchSinglePoll(id) {
-    let apiURI = `${masterURI}/poll/${id}`;
+    const apiURI = `${masterURI}/poll/${id}`;
 
-    return this.http.get(apiURI, {headers: this.headers})
+    return this.http.get(apiURI)
       .map(res => res.json());
   }
 
   fetchRecentPolls() {
-  	let apiURI = `${masterURI}/poll/recent`;
+  	const apiURI = `${masterURI}/poll/recent`;
 
-  	return this.http.get(apiURI, {headers: this.headers})
+  	return this.http.get(apiURI)
   		.map(res => res.json());
   }
 
   fetchAllPolls() {
-  	let apiURI = `${masterURI}/poll/all`;
+  	const apiURI = `${masterURI}/poll/all`;
 
-  	return this.http.get(apiURI, {headers: this.headers})
+  	return this.http.get(apiURI)
   		.map(res => res.json());
   }
 
+  fetchUserPolls() {
+    const apiURI = `${masterURI}/poll/userpolls`;
+
+    return this.http.get(apiURI)
+      .map(res => res.json());
+  }
+
   postNewPoll(poll) {
-    let apiURI = `${masterURI}/poll/new`;
+    const apiURI = `${masterURI}/poll/new`;
 
     return this.http.post(apiURI, poll, {headers: this.headers})
       .map(res => res.json());
   }
 
   addNewOpt(pollId, newOpt) {
-    let apiURI = `${masterURI}/poll/${pollId}`;
+    const apiURI = `${masterURI}/poll/${pollId}`;
 
     return this.http.put(apiURI, {opt: newOpt}, {headers: this.headers})
       .map(res => res.json());
   }
 
   incVoteCount(pollId, currOptId) {
-    let apiURI = `${masterURI}/poll/${pollId}`;
+    const apiURI = `${masterURI}/poll/${pollId}`;
 
     return this.http.patch(apiURI, {_id: currOptId}, {headers: this.headers})
       .map(res => res.json());
