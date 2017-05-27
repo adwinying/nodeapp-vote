@@ -26,4 +26,11 @@ export class PollService {
   		.map(res => res.json());
   }
 
+  postNewPoll(poll) {
+    let apiURI = `${masterURI}/poll/new`;
+
+    return this.http.post(apiURI, poll, {headers: this.headers})
+      .map(res => res.json());
+  }
+
 }

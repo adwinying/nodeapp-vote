@@ -9,6 +9,7 @@ import { PollService } from '../../services/poll.service';
 })
 export class AllPollsComponent implements OnInit {
 	allPolls: Poll[] = [];
+  isAjaxComplete: boolean = false;
 
   constructor(
   	private pollService: PollService
@@ -16,6 +17,7 @@ export class AllPollsComponent implements OnInit {
 
   ngOnInit() {
   	this.pollService.fetchAllPolls().subscribe(data => {
+      this.isAjaxComplete = true;
   		if (data.success) {
   			this.allPolls = data.polls;
   		} else {

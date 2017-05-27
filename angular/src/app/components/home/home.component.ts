@@ -9,6 +9,7 @@ import { Poll } from '../../classes/poll';
 })
 export class HomeComponent implements OnInit {
 	recentPolls: Poll[] = [];
+  isAjaxComplete: boolean = false;
 
   constructor(
   	private pollService: PollService
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   	this.pollService.fetchRecentPolls().subscribe(data => {
+      this.isAjaxComplete = true;
   		if (data.success) {
   			this.recentPolls = data.polls;
   		} else {
