@@ -1,0 +1,7 @@
+<div class="list-group">
+	<a class="list-group-item" 
+		*ngFor="let poll of polls" 
+		[routerLink]="['/poll', poll._id]">
+		{{poll.title}}
+	</a>
+</div>

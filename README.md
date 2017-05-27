@@ -23,7 +23,7 @@ Expects the following input:
 ```javascript
 {
 	"title": "poll title",
-	"options": "poll\noptions\separated\nby\nline\break"
+	"options": "poll\noptions\separated\nby\nline\nbreak"
 }
 ```
 
@@ -47,7 +47,7 @@ Expects the following input:
 
 ```javascript
 {
-  "_id": "option id",
+	"_id": "option id",
 }
 ```
 

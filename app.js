@@ -5,6 +5,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const pollRoutes = require('./routes/pollRoutes');
@@ -21,6 +22,9 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
 	console.log('Error connecting to DB', err);
 });
+
+// CORS mw
+app.use(cors());
 
 // Body parser mw
 app.use(bodyParser.json());

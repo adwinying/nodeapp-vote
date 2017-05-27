@@ -45,7 +45,7 @@ module.exports.getAllPolls = (callback) => {
 };
 
 module.exports.getRecentPolls = (callback) => {
-	Poll.find({}).sort('-updated').limit(10).exec((err, polls) => {
+	Poll.find({}).sort('-updated').limit(6).exec((err, polls) => {
 		if (err) callback(err, null);
 
 		callback(null, polls);
