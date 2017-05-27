@@ -31,6 +31,9 @@ module.exports.loggedIn = (req, res, next) => {
 	if (req.user) {
 		next();
 	} else {
-		res.redirect('/auth/login');
+		res.json({
+			success: false,
+			message: 'Not logged in'
+		});
 	}
 };

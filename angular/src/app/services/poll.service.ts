@@ -12,6 +12,13 @@ export class PollService {
   	this.headers.append('Content-Type', 'application/json');
   }
 
+  fetchSinglePoll(id) {
+    let apiURI = `${masterURI}/poll/${id}`;
+
+    return this.http.get(apiURI, {headers: this.headers})
+      .map(res => res.json());
+  }
+
   fetchRecentPolls() {
   	let apiURI = `${masterURI}/poll/recent`;
 
@@ -33,4 +40,17 @@ export class PollService {
       .map(res => res.json());
   }
 
+  addNewOpt(pollId, newOpt) {
+    let apiURI = `${masterURI}/poll/${pollId}`;
+
+    return this.http.put(apiURI, {opt: newOpt}, {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  incVoteCount(pollId, currOptId) {
+    let apiURI = `${masterURI}/poll/${pollId}`;
+
+    return this.http.patch(apiURI, {_id: currOptId}, {headers: this.headers})
+      .map(res => res.json());
+  }
 }

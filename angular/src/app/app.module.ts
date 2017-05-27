@@ -14,7 +14,7 @@ import { PollListComponent } from './components/poll-list/poll-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AllPollsComponent } from './components/all-polls/all-polls.component';
 import { NewPollComponent } from './components/new-poll/new-poll.component';
-import { PollComponent } from './components/poll/poll.component';
+import { PollDetailComponent } from './components/poll-detail/poll-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { PollComponent } from './components/poll/poll.component';
     FooterComponent,
     AllPollsComponent,
     NewPollComponent,
-    PollComponent
+    PollDetailComponent
   ],
   imports: [
     BrowserModule,
