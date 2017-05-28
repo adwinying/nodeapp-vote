@@ -39,7 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
 
-
 // Routes
 app.use('/auth', authRoutes);
 app.use('/poll', pollRoutes);
@@ -48,7 +47,19 @@ app.use('/poll', pollRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-	res.json({hello: 'world'});
+	res.redirect('/poll/all');
+});
+
+// express-jwt error handling mw
+app.use((err, req, res, next) => {
+	if(err.name === 'UnauthorizedError') {
+		console.error(err);
+		res.status(401).send({
+			success: false,
+			message:err.message
+		});
+	}
+	next();
 });
 
 app.listen(port, () => {

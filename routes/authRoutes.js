@@ -2,8 +2,9 @@ const express = require('express');
 const passport = require('passport');
 const authRouter = express.Router();
 const loggedIn = require('../config/passport.js').loggedIn;
+const authCheck = require('../config/jwt.js');
 
-authRouter.get('/login', passport.authenticate('twitter'));
+authRouter.post('/twitter', passport.authenticate('twitter'));
 
 authRouter.get('/callback', passport.authenticate('twitter', {
 	successRedirect: '/poll/userpolls',
@@ -15,7 +16,7 @@ authRouter.get('/logout', (req, res) => {
 	res.json({logout: true});
 });
 
-authRouter.get('/check', loggedIn, (req, res) => {
+authRouter.get('/check', authCheck, (req, res) => {
 	res.json({
 		success: true,
 		user: req.user

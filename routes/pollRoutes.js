@@ -4,7 +4,7 @@ const loggedIn = require('../config/passport.js').loggedIn;
 const Poll = require('../models/pollModel');
 
 function sendErr(res, err) {
-	res.json({
+	res.send(401).json({
 		success: false,
 		message: err
 	});

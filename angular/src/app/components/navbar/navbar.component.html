@@ -19,10 +19,26 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li [routerLinkActive]="['active']" 
-          [routerLinkActiveOptions]="{exact: true}">
+          [routerLinkActiveOptions]="{exact: true}"
+          *ngIf="authService.authenticated()">
+          <a [routerLink]="['/dashboard']">Dashboard</a>
+        </li>
+        <li [routerLinkActive]="['active']" 
+          [routerLinkActiveOptions]="{exact: true}"
+          *ngIf="authService.authenticated()">
           <a [routerLink]="['/poll/new']">New Poll</a>
         </li>
-        <li><a href="//localhost:3000/auth/login" target="_blank">Sign in with <i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li *ngIf="!authService.authenticated()">
+          <a (click)="onLoginClick()">
+            Sign in with <i class="fa fa-twitter" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="dropdown" *ngIf="authService.authenticated()">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">{{authService.getUserName()}} <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" (click)="onLogoutClick()">Sign Out</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
