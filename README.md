@@ -4,17 +4,17 @@ TODO: implement documentation
 
 ## Backend APIs
 
-_**[Restricted]** APIs require user to be logged in_
+_**[Restricted]** APIs require user to send request containing a valid JWT token_
 
-`GET /auth/login`: Logs in user via Twitter OAuth
-
-`GET /auth/logout`: Logs out user's current session
+`GET /auth/check`: Checks JWT token valid and returns the JWT payload
 
 ---
 
 `GET /poll/all`: Fetches all polls
 
 `GET /poll/recent`: Fetches recently created/updated polls
+
+`GET /poll/userpolls`: **[Restricted]** Fetches user created polls
 
 `POST /poll/new`: **[Restricted]** Create new post
 

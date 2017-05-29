@@ -9,6 +9,7 @@ import { PollService } from './services/poll.service';
 import { AuthService } from './services/auth.service';
 import { JwtService } from './services/jwt.service';
 import { AuthGuard } from './guards/auth.guard';
+import { Title } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -44,7 +45,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     PollService,
     AuthService,
     JwtService,
-    AuthGuard
+    AuthGuard,
+    Title
   ],
   bootstrap: [AppComponent]
 })

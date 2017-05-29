@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { PollService } from '../../services/poll.service';
 import { Router } from '@angular/router';
@@ -15,10 +16,12 @@ export class NewPollComponent implements OnInit {
   constructor(
   	private flashMessage: FlashMessagesService,
   	private pollService: PollService,
-  	private router: Router
+  	private router: Router,
+    private pageTitle: Title
 	) { }
 
   ngOnInit() {
+    this.pageTitle.setTitle('New Poll - NodeVote');
   }
 
   onNewPollSubmit(event) {

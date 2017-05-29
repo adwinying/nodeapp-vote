@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { PollService } from '../../services/poll.service';
 import { Poll } from '../../classes/poll';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -14,10 +15,12 @@ export class DashboardComponent implements OnInit {
 
   constructor(
   	private pollService: PollService,
-  	private flashMessage: FlashMessagesService
+  	private flashMessage: FlashMessagesService,
+  	private title: Title
 	) { }
 
   ngOnInit() {
+  	this.title.setTitle('Dashboard - NodeVote');
   	this.pollService.fetchUserPolls().subscribe(data => {
   		this.isAjaxComplete = true;
   		console.log(data);

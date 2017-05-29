@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { PollService } from '../../services/poll.service';
 import { Poll } from '../../classes/poll';
@@ -23,7 +24,8 @@ export class PollDetailComponent implements OnInit {
     private authService: AuthService,
   	private route: ActivatedRoute,
   	private flashMessage: FlashMessagesService,
-  	private router: Router
+  	private router: Router,
+    private title: Title
 	) { }
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class PollDetailComponent implements OnInit {
           if (this.poll.ownerId === this.authService.getUserId()) {
             this.isOwner = true;
           }
+
+          this.title.setTitle(`${this.poll.title} - NodeVote`);
   			}
   		})
   	});
