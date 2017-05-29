@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 
 const masterURI = '//localhost:3000';
@@ -8,7 +9,10 @@ const masterURI = '//localhost:3000';
 export class PollService {
 	headers: Headers = new Headers();
 
-  constructor(private http: Http) {
+  constructor(
+    private http: Http,
+    private authHttp: AuthHttp
+  ) {
   	this.headers.append('Content-Type', 'application/json');
   }
 
@@ -36,21 +40,21 @@ export class PollService {
   fetchUserPolls() {
     const apiURI = `${masterURI}/poll/userpolls`;
 
-    return this.http.get(apiURI)
+    return this.authHttp.get(apiURI)
       .map(res => res.json());
   }
 
   postNewPoll(poll) {
     const apiURI = `${masterURI}/poll/new`;
 
-    return this.http.post(apiURI, poll, {headers: this.headers})
+    return this.authHttp.post(apiURI, poll)
       .map(res => res.json());
   }
 
   addNewOpt(pollId, newOpt) {
     const apiURI = `${masterURI}/poll/${pollId}`;
 
-    return this.http.put(apiURI, {opt: newOpt}, {headers: this.headers})
+    return this.authHttp.put(apiURI, {opt: newOpt})
       .map(res => res.json());
   }
 
@@ -58,6 +62,13 @@ export class PollService {
     const apiURI = `${masterURI}/poll/${pollId}`;
 
     return this.http.patch(apiURI, {_id: currOptId}, {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  delPoll(pollId) {
+    const apiURI = `${masterURI}/poll/${pollId}`;
+
+    return this.authHttp.delete(apiURI)
       .map(res => res.json());
   }
 }

@@ -31,6 +31,9 @@ export class AuthService {
 	    localStorage.setItem("accessToken", authResult.accessToken);
 	    localStorage.setItem("idToken", JSON.stringify(authResult.idToken));
       localStorage.setItem("userName", JSON.stringify(authResult.idTokenPayload.nickname));
+      localStorage.setItem("userId", JSON.stringify(authResult.idTokenPayload.sub.replace('twitter|', '')));
+
+      this.router.navigate(['/dashboard']);
 		});
   }
 
@@ -52,5 +55,9 @@ export class AuthService {
 
   getUserName() {
     return JSON.parse(localStorage.getItem('userName'));
+  }
+
+  getUserId() {
+    return +JSON.parse(localStorage.getItem('userId'));
   }
 }

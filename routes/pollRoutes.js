@@ -4,7 +4,7 @@ const Poll = require('../models/pollModel');
 const authCheck = require('../config/jwt.js');
 
 function sendErr(res, err) {
-	res.send(500).json({
+	res.sendStatus(500).json({
 		success: false,
 		message: err
 	});
@@ -39,8 +39,10 @@ pollRouter.get('/recent', (req, res) => {
 });
 
 // Fetch user's polls
-pollRouter.get('/userpolls', (req, res) => {
-	Poll.findByUserId(req.user.twitterId, (err, results) => {
+// Restrict access to authed users
+pollRouter.get('/userpolls', authCheck, (req, res) => {
+	const userId = +req.user.sub.replace("twitter|", "");
+	Poll.findByUserId(userId, (err, results) => {
 		if (err) {
 			sendErr(res, err);
 		} else {
@@ -55,7 +57,7 @@ pollRouter.get('/userpolls', (req, res) => {
 // Create new poll
 // Restrict access to authed users
 pollRouter.post('/new', authCheck, (req, res) => {
-	const ownerId = req.user.sub.replace("twitter|", "");
+	const ownerId = +req.user.sub.replace("twitter|", "");
 	let newPoll = new Poll({
 		ownerId,
 		title: req.body.title,
@@ -71,7 +73,7 @@ pollRouter.post('/new', authCheck, (req, res) => {
 		console.log('Successfully saved new poll');
 		res.json({
 			success: true,
-			data: newPoll
+			poll: newPoll
 		});
 	});
 });
@@ -150,7 +152,7 @@ pollRouter.route('/:pollId')
 	// Delete poll
 	// Restrict access to poll owner
 	.delete(authCheck, (req, res) => {
-		const currUserId = req.user.sub.replace("twitter|", "");
+		const currUserId = +req.user.sub.replace("twitter|", "");
 
 		if (req.poll.ownerId !== currUserId) {
 			return res.status(401).json({

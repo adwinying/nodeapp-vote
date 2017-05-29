@@ -21,11 +21,13 @@ export class NewPollComponent implements OnInit {
   ngOnInit() {
   }
 
-  onNewPollSubmit() {
+  onNewPollSubmit(event) {
   	const newPoll = {
   		title: this.title,
   		options: this.options
   	};
+
+    event.preventDefault();
 
   	this.pollService.postNewPoll(newPoll).subscribe(data => {
   		if (data.success) {
@@ -34,7 +36,7 @@ export class NewPollComponent implements OnInit {
 		  		{cssClass: 'alert-success'}
 		  	);
 
-		  	this.router.navigate([`/poll/${data._id}`]);
+		  	this.router.navigate([`/poll/${data.poll._id}`]);
   		} else {
   			this.flashMessage.show(
   				'An error has occured. Please try again later.',

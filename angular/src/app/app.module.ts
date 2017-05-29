@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RoutingModule } from './routing.module';
+import { HttpModule} from '@angular/http';
+import { RoutingModule } from './modules/routing.module';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import { Ng2UiAuthModule, CustomConfig } from 'ng2-ui-auth';
 
 import { PollService } from './services/poll.service';
 import { AuthService } from './services/auth.service';
-import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { JwtService } from './services/jwt.service';
+import { AuthGuard } from './guards/auth.guard';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -18,13 +18,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AllPollsComponent } from './components/all-polls/all-polls.component';
 import { NewPollComponent } from './components/new-poll/new-poll.component';
 import { PollDetailComponent } from './components/poll-detail/poll-detail.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-export class AuthConfig extends CustomConfig {
-  defaultHeaders = {'Content-Type': 'application/json'};
-  tokenName = 'accessToken';
-  tokenPrefix = '';
-  baseUrl = 'http://localhost:3000';
-};
 
 @NgModule({
   declarations: [
@@ -35,7 +30,8 @@ export class AuthConfig extends CustomConfig {
     FooterComponent,
     AllPollsComponent,
     NewPollComponent,
-    PollDetailComponent
+    PollDetailComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -43,12 +39,12 @@ export class AuthConfig extends CustomConfig {
     HttpModule,
     RoutingModule,
     FlashMessagesModule,
-    Ng2UiAuthModule.forRoot(AuthConfig)
   ],
   providers: [
     PollService,
     AuthService,
-    AUTH_PROVIDERS
+    JwtService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { PollService } from '../../services/poll.service';
 import { Poll } from '../../classes/poll';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -15,9 +16,11 @@ export class PollDetailComponent implements OnInit {
 	selectedOptId: number;
 	newOptName: string;
 	isAjaxComplete: boolean = false;
+  isOwner: boolean = false;
 
   constructor(
   	private pollService: PollService,
+    private authService: AuthService,
   	private route: ActivatedRoute,
   	private flashMessage: FlashMessagesService,
   	private router: Router
@@ -31,6 +34,10 @@ export class PollDetailComponent implements OnInit {
   			this.isAjaxComplete = true;
   			if (data.success) {
 					this.poll = data.poll;
+
+          if (this.poll.ownerId === this.authService.getUserId()) {
+            this.isOwner = true;
+          }
   			}
   		})
   	});
@@ -47,22 +54,29 @@ export class PollDetailComponent implements OnInit {
 
   onVoteSubmit() {
   	if (this.newOptName) {
-  		this.pollService.addNewOpt(this.pollId, this.newOptName).subscribe(data => {
-  			if (data.success) {
-  				this.flashMessage.show(
-  					'New poll option added successfully.',
-  					{cssClass: 'alert-success'}
-					);
-					this.poll = data.poll;
-					this.newOptName = "";
-  			} else {
-  				this.flashMessage.show(
-  					'An error has occurred. Please try again.',
-  					{cssClass: 'alert-danger'}
-					);
-					console.error(data.message);
-  			}
-  		});
+      if (this.authService.authenticated()) {
+    		this.pollService.addNewOpt(this.pollId, this.newOptName).subscribe(data => {
+    			if (data.success) {
+    				this.flashMessage.show(
+    					'New poll option added successfully.',
+    					{cssClass: 'alert-success'}
+  					);
+  					this.poll = data.poll;
+  					this.newOptName = "";
+    			} else {
+    				this.flashMessage.show(
+    					'An error has occurred. Please try again.',
+    					{cssClass: 'alert-danger'}
+  					);
+  					console.error(data.message);
+    			}
+    		});
+      } else {
+        this.flashMessage.show(
+          'You need to be logged in to add a new option',
+          {cssClass: 'alert-danger'}
+        );
+      }
   	} else if (this.selectedOptId) {
   		this.pollService.incVoteCount(this.pollId, this.selectedOptId).subscribe(data => {
   			if (data.success) {
@@ -86,6 +100,18 @@ export class PollDetailComponent implements OnInit {
   			{cssClass: 'alert-warning'}
 			);
   	}
+  }
+
+  onDeleteClick() {
+    this.pollService.delPoll(this.pollId).subscribe(data => {
+      if (data.success) {
+        this.flashMessage.show(
+          'Successfully deleted poll.',
+          {cssClass: 'alert-success'}
+        );
+        this.router.navigate(['/dashboard']);
+      }
+    });
   }
 
 }

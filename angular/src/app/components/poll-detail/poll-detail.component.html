@@ -35,6 +35,7 @@
 			<a href="#" class="btn btn-default">
 				Share <i class="fa fa-twitter" aria-hidden="true"></i>
 			</a>
+			<a class="btn btn-danger" (click)="onDeleteClick()" *ngIf="isOwner">Delete</a>
 		</div>
 	</div>
 </ng-template>
