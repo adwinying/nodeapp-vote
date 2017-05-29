@@ -1,0 +1,9 @@
+.chart-wrapper {
+	margin-bottom: 50px
+}
+
+@media screen and (min-width: 992px) {
+  .chart-wrapper {
+  	margin-top: 60px;
+  }
+}

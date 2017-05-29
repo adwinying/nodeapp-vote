@@ -124,6 +124,9 @@ pollRouter.route('/:pollId')
 	})
 	// Increment option count
 	.patch((req, res) => {
+		let ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		console.log('ipAddr:', ipAddr);
+
 		req.poll.opts.map((opt) => {
 			if (opt._id.toString() === req.body._id) {
 				return {

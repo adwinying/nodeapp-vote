@@ -6,12 +6,7 @@
 <ng-template #pollDetails>
 	<div class="row">
 		<div class="col-md-6 col-md-push-6">
-			<ul>
-				<li *ngFor="let opt of poll.opts">
-					<strong>{{opt.name}}</strong>:
-					{{opt.count}}
-				</li>
-			</ul>
+			<app-chart [pollData]="poll"></app-chart>
 		</div>
 		<div class="col-md-6 col-md-pull-6">
 			<h2>{{poll.title}}</h2>
@@ -39,4 +34,3 @@
 		</div>
 	</div>
 </ng-template>
-<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>

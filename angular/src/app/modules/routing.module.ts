@@ -6,6 +6,7 @@ import { DashboardComponent } from '../components/dashboard/dashboard.component'
 import { AllPollsComponent } from '../components/all-polls/all-polls.component';
 import { NewPollComponent } from '../components/new-poll/new-poll.component';
 import { PollDetailComponent } from '../components/poll-detail/poll-detail.component';
+import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { AuthGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
@@ -29,6 +30,10 @@ export const routes: Routes = [
 	{
 		path: 'poll/:id',
 		component: PollDetailComponent
+	},
+	{
+		path: '**',
+		component: NotFoundComponent
 	}
 ]
 

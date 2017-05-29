@@ -20,6 +20,8 @@ import { AllPollsComponent } from './components/all-polls/all-polls.component';
 import { NewPollComponent } from './components/new-poll/new-poll.component';
 import { PollDetailComponent } from './components/poll-detail/poll-detail.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 
 @NgModule({
@@ -32,14 +34,16 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AllPollsComponent,
     NewPollComponent,
     PollDetailComponent,
-    DashboardComponent
+    DashboardComponent,
+    NotFoundComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RoutingModule,
-    FlashMessagesModule,
+    FlashMessagesModule
   ],
   providers: [
     PollService,
