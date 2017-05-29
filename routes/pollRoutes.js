@@ -1,6 +1,5 @@
 const express = require('express');
 const pollRouter = express.Router();
-const loggedIn = require('../config/passport.js').loggedIn;
 const Poll = require('../models/pollModel');
 
 function sendErr(res, err) {
@@ -39,7 +38,7 @@ pollRouter.get('/recent', (req, res) => {
 });
 
 // Fetch user's polls
-pollRouter.get('/userpolls', loggedIn, (req, res) => {
+pollRouter.get('/userpolls', (req, res) => {
 	Poll.findByUserId(req.user.twitterId, (err, results) => {
 		if (err) {
 			sendErr(res, err);

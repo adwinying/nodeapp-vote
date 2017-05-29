@@ -1,7 +1,5 @@
 const path = require('path');
 const express = require('express');
-const favicon = require('serve-favicon');
-const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -28,17 +26,6 @@ app.use(cors());
 
 // Body parser mw
 app.use(bodyParser.json());
-
-// Passport mw
-app.use(session({
-	secret: 'asdfgh',
-	resave: true,
-	saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport')(passport);
-
 // Routes
 app.use('/auth', authRoutes);
 app.use('/poll', pollRoutes);
