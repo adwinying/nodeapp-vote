@@ -6,8 +6,6 @@ import { tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
-const masterURI = 'localhost:3000';
-
 @Injectable()
 export class AuthService {
 	headers: Headers = new Headers();

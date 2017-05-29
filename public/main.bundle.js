@@ -1463,7 +1463,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var masterURI = '';
+var masterURI = '/api';
 var PollService = (function () {
     function PollService(http, authHttp) {
         this.http = http;
@@ -1640,7 +1640,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var masterURI = 'localhost:3000';
 var AuthService = (function () {
     function AuthService(http, router) {
         var _this = this;

@@ -1,22 +1,20 @@
 # NodeJS Vote App
 
-TODO: implement documentation
-
 ## Backend APIs
 
 _**[Restricted]** APIs require user to send request containing a valid JWT token_
 
-`GET /auth/check`: Checks JWT token valid and returns the JWT payload
+`GET /api/auth/check`: Checks JWT token valid and returns the JWT payload
 
 ---
 
-`GET /poll/all`: Fetches all polls
+`GET /api/poll/all`: Fetches all polls
 
-`GET /poll/recent`: Fetches recently created/updated polls
+`GET /api/poll/recent`: Fetches recently created/updated polls
 
-`GET /poll/userpolls`: **[Restricted]** Fetches user created polls
+`GET /api/poll/userpolls`: **[Restricted]** Fetches user created polls
 
-`POST /poll/new`: **[Restricted]** Create new post
+`POST /api/poll/new`: **[Restricted]** Create new post
 
 Expects the following input:
 
@@ -29,9 +27,9 @@ Expects the following input:
 
 ---
 
-`GET /poll/:id`: Return single poll containing ID of `:id`
+`GET /api/poll/:id`: Return single poll containing ID of `:id`
 
-`PUT /poll/:id`: Add poll options
+`PUT /api/poll/:id`: Add poll options
 
 Expects the following input:
 
@@ -41,7 +39,7 @@ Expects the following input:
 }
 ```
 
-`PATCH /poll/:id`: Increment poll option count by 1
+`PATCH /api/poll/:id`: Increment poll option count by 1
 
 Expects the following input:
 
@@ -51,7 +49,7 @@ Expects the following input:
 }
 ```
 
-`DELETE /poll/:id`: **[Restricted]** Delete poll with ID `:id`. Only poll owners are authorized.
+`DELETE /api/poll/:id`: **[Restricted]** Delete poll with ID `:id`. Only poll owners are authorized.
 
 
 

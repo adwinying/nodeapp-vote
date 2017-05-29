@@ -26,15 +26,11 @@ app.use(cors());
 // Body parser mw
 app.use(bodyParser.json());
 // Routes
-app.use('/auth', authRoutes);
-app.use('/poll', pollRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/poll', pollRoutes);
 
 // Static mw
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-	res.redirect('/poll/all');
-});
 
 // express-jwt error handling mw
 app.use((err, req, res, next) => {
