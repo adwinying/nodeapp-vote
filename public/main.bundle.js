@@ -1463,7 +1463,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var masterURI = '//localhost:3000';
+var masterURI = '';
 var PollService = (function () {
     function PollService(http, authHttp) {
         this.http = http;

@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 
-const masterURI = '//localhost:3000';
+const masterURI = '';
 
 @Injectable()
 export class PollService {
