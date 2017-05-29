@@ -153,7 +153,7 @@ pollRouter.route('/:pollId')
 		const currUserId = req.user.sub.replace("twitter|", "");
 
 		if (req.poll.ownerId !== currUserId) {
-			res.status(401).json({
+			return res.status(401).json({
 				success: false,
 				message: 'User is not poll owner'
 			});

@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 		console.error(err);
 		res.status(401).send({
 			success: false,
-			message:err.message
+			message: err.message
 		});
 	}
 	next();
