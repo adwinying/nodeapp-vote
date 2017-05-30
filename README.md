@@ -41,6 +41,8 @@ Expects the following input:
 
 `PATCH /api/poll/:id`: Increment poll option count by 1
 
+`PATCH /api/poll/authed/:id`: **[Restricted]** Increment poll option count by 1 for authed users
+
 Expects the following input:
 
 ```javascript
