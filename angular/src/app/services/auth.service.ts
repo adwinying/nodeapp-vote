@@ -14,6 +14,8 @@ export class AuthService {
     'adwin.auth0.com',
     {
       auth: {
+        redirectUrl: window.location.origin + '/',
+        responseType: 'token',
         params: {
           scope: 'openid nickname'
         }

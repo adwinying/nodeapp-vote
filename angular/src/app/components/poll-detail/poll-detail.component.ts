@@ -72,7 +72,7 @@ export class PollDetailComponent implements OnInit {
     					'An error has occurred. Please try again.',
     					{cssClass: 'alert-danger'}
   					);
-  					console.error(data.message);
+            console.error(data.message);
     			}
     		});
       } else {
@@ -92,7 +92,7 @@ export class PollDetailComponent implements OnInit {
 					this.selectedOptId = NaN;
   			} else {
   				this.flashMessage.show(
-  					'An error has occurred. Please try again.',
+  					data.message,
   					{cssClass: 'alert-danger'}
 					);
 					console.error(data.message);

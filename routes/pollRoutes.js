@@ -1,6 +1,7 @@
 const express = require('express');
 const pollRouter = express.Router();
 const Poll = require('../models/pollModel');
+const Log = require('../models/logModel');
 const authCheck = require('../config/jwt.js');
 
 function sendErr(res, err) {
@@ -78,17 +79,34 @@ pollRouter.post('/new', authCheck, (req, res) => {
 	});
 });
 
-//pollRouter mw
-pollRouter.use('/:pollId', (req, res, next) => {
-	Poll.findById(req.params.pollId, (err, poll) => {
+// Increment option count for authed users
+pollRouter.patch('/authed/:pollId', authCheck, findPoll, (req, res) => {
+	console.log('authed');
+	let voteLog = {
+		pollId: req.params.pollId,
+		userId: +req.user.sub.replace('twitter|', '')
+	};
+	console.log(voteLog);
+
+	Log.getLogs(voteLog, (err, logs) => {
 		if (err) {
 			sendErr(res, err);
+		} else if (logs.length) {
+			console.log('logs exists:', logs);
+			return res.json({
+				success: false,
+				message: 'You have voted on this poll already. [User voted]'
+			});
 		} else {
-			req.poll = poll;
-			next();
+			let newLog = new Log(voteLog);
+			newLog.save();
+			incrementVote(req, res);
 		}
 	});
 });
+
+//pollRouter mw
+pollRouter.use('/:pollId', findPoll);
 
 pollRouter.route('/:pollId')
 	// Get single poll
@@ -124,31 +142,27 @@ pollRouter.route('/:pollId')
 	})
 	// Increment option count
 	.patch((req, res) => {
-		let ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		console.log('ipAddr:', ipAddr);
+		console.log('non-authed');
+		let voteLog = {
+			pollId: req.params.pollId,
+			ipAddr: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		};
+		console.log(voteLog);
 
-		req.poll.opts.map((opt) => {
-			if (opt._id.toString() === req.body._id) {
-				return {
-					name: opt.name,
-					_id: opt._id,
-					count: opt.count++
-				};
-			} else {
-				return opt;
-			}
-		});
-
-		req.poll.updated = Date.now();
-
-		req.poll.save((err) => {
+		Log.getLogs(voteLog, (err, logs) => {
+			console.log(err);
 			if (err) {
 				sendErr(res, err);
-			} else {
-				res.json({
-					success: true,
-					poll: req.poll
+			} else if (logs.length) {
+				console.log('logs exists:', logs);
+				return res.json({
+					success: false,
+					message: 'You have voted on this poll already. [IP voted]'
 				});
+			} else {
+				let newLog = new Log(voteLog);
+				newLog.save();
+				incrementVote(req, res);
 			}
 		});
 	})
@@ -176,5 +190,42 @@ pollRouter.route('/:pollId')
 		});
 	});
 
+function findPoll(req, res, next) {
+	Poll.findById(req.params.pollId, (err, poll) => {
+		if (err) {
+			sendErr(res, err);
+		} else {
+			req.poll = poll;
+			next();
+		}
+	});
+}
+
+function incrementVote(req, res) {
+	req.poll.opts.map((opt) => {
+		if (opt._id.toString() === req.body._id) {
+			return {
+				name: opt.name,
+				_id: opt._id,
+				count: opt.count++
+			};
+		} else {
+			return opt;
+		}
+	});
+
+	req.poll.updated = Date.now();
+
+	req.poll.save((err) => {
+		if (err) {
+			sendErr(res, err);
+		} else {
+			res.json({
+				success: true,
+				poll: req.poll
+			});
+		}
+	});
+}
 
 module.exports = pollRouter;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { AuthService } from './auth.service';
 import 'rxjs/add/operator/map';
 
 const masterURI = '/api';
@@ -11,7 +12,8 @@ export class PollService {
 
   constructor(
     private http: Http,
-    private authHttp: AuthHttp
+    private authHttp: AuthHttp,
+    private authService: AuthService
   ) {
   	this.headers.append('Content-Type', 'application/json');
   }
@@ -61,8 +63,13 @@ export class PollService {
   incVoteCount(pollId, currOptId) {
     const apiURI = `${masterURI}/poll/${pollId}`;
 
-    return this.http.patch(apiURI, {_id: currOptId}, {headers: this.headers})
-      .map(res => res.json());
+    if (this.authService.getToken()) {
+      return this.authHttp.patch(`${masterURI}/poll/authed/${pollId}`, {_id: currOptId})
+        .map(res => res.json());
+    } else {
+      return this.http.patch(apiURI, {_id: currOptId}, {headers: this.headers})
+        .map(res => res.json());
+    }
   }
 
   delPoll(pollId) {
