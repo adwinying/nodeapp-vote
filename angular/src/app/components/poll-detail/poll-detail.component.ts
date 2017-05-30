@@ -69,7 +69,7 @@ export class PollDetailComponent implements OnInit {
   					this.newOptName = "";
     			} else {
     				this.flashMessage.show(
-    					'An error has occurred. Please try again.',
+    					data.message,
     					{cssClass: 'alert-danger'}
   					);
             console.error(data.message);

@@ -119,23 +119,45 @@ pollRouter.route('/:pollId')
 	// Add poll options
 	// Restrict access to authed users
 	.put(authCheck, (req, res) => {
-		req.poll.opts = [
-			...req.poll.opts, 
-			{
-				name: req.body.opt,
-				count: 1
-			}
-		];
+		console.log('add opt');
+		let voteLog = {
+			pollId: req.params.pollId,
+			userId: +req.user.sub.replace('twitter|', '')
+		};
+		console.log(voteLog);
 
-		req.poll.updated = Date.now();
-
-		req.poll.save((err) => {
+		Log.getLogs(voteLog, (err, logs) => {
 			if (err) {
 				sendErr(res, err);
+			} else if (logs.length) {
+				console.log('logs exists:', logs);
+				return res.json({
+					success: false,
+					message: 'You have voted on this poll already. [User voted]'
+				});
 			} else {
-				res.json({
-					success: true,
-					poll: req.poll
+				let newLog = new Log(voteLog);
+				newLog.save();
+				
+				req.poll.opts = [
+					...req.poll.opts, 
+					{
+						name: req.body.opt,
+						count: 1
+					}
+				];
+
+				req.poll.updated = Date.now();
+
+				req.poll.save((err) => {
+					if (err) {
+						sendErr(res, err);
+					} else {
+						res.json({
+							success: true,
+							poll: req.poll
+						});
+					}
 				});
 			}
 		});
