@@ -44,6 +44,11 @@ app.use((err, req, res, next) => {
 	next();
 });
 
+// redirect all unmatched URLs to main site
+app.all('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
 app.listen(port, () => {
 	console.log('Server started on port', port);
 });
